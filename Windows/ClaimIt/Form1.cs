@@ -16,9 +16,14 @@ namespace ClaimIt
             InitializeComponent();
         }
 
+        private void llSourceCode_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+
+        }
+
         private void Form1_Load(object sender, EventArgs e)
         {
-            this.Text = Application.ProductName + " Version:" + Application.ProductVersion;
+            this.Text = Application.ProductName + " Version: " + Application.ProductVersion;
         }
     }
 }
