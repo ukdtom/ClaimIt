@@ -33,17 +33,17 @@
             this.llLicense = new System.Windows.Forms.LinkLabel();
             this.llDownload = new System.Windows.Forms.LinkLabel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.lblPlexTvLoginName = new System.Windows.Forms.Label();
-            this.lblPlexTVPassword = new System.Windows.Forms.Label();
-            this.tbPlexTVName = new System.Windows.Forms.TextBox();
-            this.tbPlexTvPassword = new System.Windows.Forms.TextBox();
-            this.lblPlexTVPassword2 = new System.Windows.Forms.Label();
-            this.tbPlexTvPassword2 = new System.Windows.Forms.TextBox();
-            this.lblPMSIP = new System.Windows.Forms.Label();
-            this.tbIPPMS = new System.Windows.Forms.TextBox();
-            this.btnClaimIt = new System.Windows.Forms.Button();
-            this.lbStatus = new System.Windows.Forms.ListBox();
+            this.mtbIPAddress = new System.Windows.Forms.MaskedTextBox();
             this.lblStatus = new System.Windows.Forms.Label();
+            this.btnClaimIt = new System.Windows.Forms.Button();
+            this.lblPMSIP = new System.Windows.Forms.Label();
+            this.tbPlexTvPassword2 = new System.Windows.Forms.TextBox();
+            this.lblPlexTVPassword2 = new System.Windows.Forms.Label();
+            this.tbPlexTvPassword = new System.Windows.Forms.TextBox();
+            this.tbPlexTVName = new System.Windows.Forms.TextBox();
+            this.lblPlexTVPassword = new System.Windows.Forms.Label();
+            this.lblPlexTvLoginName = new System.Windows.Forms.Label();
+            this.LWStatus = new System.Windows.Forms.ListView();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -51,7 +51,6 @@
             // 
             this.lbAbout.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lbAbout.Enabled = false;
             this.lbAbout.FormattingEnabled = true;
             this.lbAbout.ItemHeight = 16;
             this.lbAbout.Items.AddRange(new object[] {
@@ -63,8 +62,11 @@
             "If this utillity was NOT dowloaded from the GitHub link below, then please abort " +
                 "this, and then downlowd from the link below!",
             " ",
-            "This Utillity will ask you for your plex.tv credentials, which is a concern for a" +
-                " you, so if in doubt, please review the sourcecode at the link provided below"});
+            "This Utillity will ask you for your plex.tv credentials, which might a concern fo" +
+                "r a you, but we need it to authenticate towards plex.tv",
+            " ",
+            "If you wants to check out the sourcecode, then please review the sourcecode at th" +
+                "e link provided below"});
             this.lbAbout.Location = new System.Drawing.Point(12, 12);
             this.lbAbout.Name = "lbAbout";
             this.lbAbout.Size = new System.Drawing.Size(982, 132);
@@ -107,10 +109,10 @@
             // 
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Controls.Add(this.LWStatus);
+            this.panel1.Controls.Add(this.mtbIPAddress);
             this.panel1.Controls.Add(this.lblStatus);
-            this.panel1.Controls.Add(this.lbStatus);
             this.panel1.Controls.Add(this.btnClaimIt);
-            this.panel1.Controls.Add(this.tbIPPMS);
             this.panel1.Controls.Add(this.lblPMSIP);
             this.panel1.Controls.Add(this.tbPlexTvPassword2);
             this.panel1.Controls.Add(this.lblPlexTVPassword2);
@@ -123,55 +125,32 @@
             this.panel1.Size = new System.Drawing.Size(979, 351);
             this.panel1.TabIndex = 5;
             // 
-            // lblPlexTvLoginName
+            // mtbIPAddress
             // 
-            this.lblPlexTvLoginName.AutoSize = true;
-            this.lblPlexTvLoginName.Location = new System.Drawing.Point(18, 17);
-            this.lblPlexTvLoginName.Name = "lblPlexTvLoginName";
-            this.lblPlexTvLoginName.Size = new System.Drawing.Size(125, 17);
-            this.lblPlexTvLoginName.TabIndex = 0;
-            this.lblPlexTvLoginName.Text = "plex.tv login name:";
+            this.mtbIPAddress.Location = new System.Drawing.Point(21, 268);
+            this.mtbIPAddress.Mask = "###.###.###.###";
+            this.mtbIPAddress.Name = "mtbIPAddress";
+            this.mtbIPAddress.Size = new System.Drawing.Size(113, 22);
+            this.mtbIPAddress.TabIndex = 11;
             // 
-            // lblPlexTVPassword
+            // lblStatus
             // 
-            this.lblPlexTVPassword.AutoSize = true;
-            this.lblPlexTVPassword.Location = new System.Drawing.Point(18, 83);
-            this.lblPlexTVPassword.Name = "lblPlexTVPassword";
-            this.lblPlexTVPassword.Size = new System.Drawing.Size(116, 17);
-            this.lblPlexTVPassword.TabIndex = 1;
-            this.lblPlexTVPassword.Text = "plex.tv password:";
+            this.lblStatus.AutoSize = true;
+            this.lblStatus.Location = new System.Drawing.Point(395, 17);
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(52, 17);
+            this.lblStatus.TabIndex = 10;
+            this.lblStatus.Text = "Status:";
             // 
-            // tbPlexTVName
+            // btnClaimIt
             // 
-            this.tbPlexTVName.Location = new System.Drawing.Point(21, 46);
-            this.tbPlexTVName.Name = "tbPlexTVName";
-            this.tbPlexTVName.Size = new System.Drawing.Size(306, 22);
-            this.tbPlexTVName.TabIndex = 2;
-            // 
-            // tbPlexTvPassword
-            // 
-            this.tbPlexTvPassword.Location = new System.Drawing.Point(21, 116);
-            this.tbPlexTvPassword.Name = "tbPlexTvPassword";
-            this.tbPlexTvPassword.PasswordChar = '*';
-            this.tbPlexTvPassword.Size = new System.Drawing.Size(306, 22);
-            this.tbPlexTvPassword.TabIndex = 3;
-            // 
-            // lblPlexTVPassword2
-            // 
-            this.lblPlexTVPassword2.AutoSize = true;
-            this.lblPlexTVPassword2.Location = new System.Drawing.Point(18, 150);
-            this.lblPlexTVPassword2.Name = "lblPlexTVPassword2";
-            this.lblPlexTVPassword2.Size = new System.Drawing.Size(177, 17);
-            this.lblPlexTVPassword2.TabIndex = 4;
-            this.lblPlexTVPassword2.Text = "plex.tv password repeated:";
-            // 
-            // tbPlexTvPassword2
-            // 
-            this.tbPlexTvPassword2.Location = new System.Drawing.Point(21, 185);
-            this.tbPlexTvPassword2.Name = "tbPlexTvPassword2";
-            this.tbPlexTvPassword2.PasswordChar = '*';
-            this.tbPlexTvPassword2.Size = new System.Drawing.Size(306, 22);
-            this.tbPlexTvPassword2.TabIndex = 5;
+            this.btnClaimIt.Location = new System.Drawing.Point(21, 311);
+            this.btnClaimIt.Name = "btnClaimIt";
+            this.btnClaimIt.Size = new System.Drawing.Size(75, 23);
+            this.btnClaimIt.TabIndex = 8;
+            this.btnClaimIt.Text = "&ClaimIt";
+            this.btnClaimIt.UseVisualStyleBackColor = true;
+            this.btnClaimIt.Click += new System.EventHandler(this.BtnClaimIt_Click);
             // 
             // lblPMSIP
             // 
@@ -182,42 +161,64 @@
             this.lblPMSIP.TabIndex = 6;
             this.lblPMSIP.Text = "IP Address of your Plex Media Server:";
             // 
-            // tbIPPMS
+            // tbPlexTvPassword2
             // 
-            this.tbIPPMS.Location = new System.Drawing.Point(21, 262);
-            this.tbIPPMS.Name = "tbIPPMS";
-            this.tbIPPMS.Size = new System.Drawing.Size(306, 22);
-            this.tbIPPMS.TabIndex = 7;
+            this.tbPlexTvPassword2.Location = new System.Drawing.Point(21, 185);
+            this.tbPlexTvPassword2.Name = "tbPlexTvPassword2";
+            this.tbPlexTvPassword2.PasswordChar = '*';
+            this.tbPlexTvPassword2.Size = new System.Drawing.Size(306, 22);
+            this.tbPlexTvPassword2.TabIndex = 5;
             // 
-            // btnClaimIt
+            // lblPlexTVPassword2
             // 
-            this.btnClaimIt.Location = new System.Drawing.Point(21, 311);
-            this.btnClaimIt.Name = "btnClaimIt";
-            this.btnClaimIt.Size = new System.Drawing.Size(75, 23);
-            this.btnClaimIt.TabIndex = 8;
-            this.btnClaimIt.Text = "&ClaimIt";
-            this.btnClaimIt.UseVisualStyleBackColor = true;
+            this.lblPlexTVPassword2.AutoSize = true;
+            this.lblPlexTVPassword2.Location = new System.Drawing.Point(18, 150);
+            this.lblPlexTVPassword2.Name = "lblPlexTVPassword2";
+            this.lblPlexTVPassword2.Size = new System.Drawing.Size(177, 17);
+            this.lblPlexTVPassword2.TabIndex = 4;
+            this.lblPlexTVPassword2.Text = "plex.tv password repeated:";
             // 
-            // lbStatus
+            // tbPlexTvPassword
             // 
-            this.lbStatus.Enabled = false;
-            this.lbStatus.FormattingEnabled = true;
-            this.lbStatus.ItemHeight = 16;
-            this.lbStatus.Items.AddRange(new object[] {
-            "Waiting for user to start"});
-            this.lbStatus.Location = new System.Drawing.Point(398, 46);
-            this.lbStatus.Name = "lbStatus";
-            this.lbStatus.Size = new System.Drawing.Size(557, 244);
-            this.lbStatus.TabIndex = 9;
+            this.tbPlexTvPassword.Location = new System.Drawing.Point(21, 116);
+            this.tbPlexTvPassword.Name = "tbPlexTvPassword";
+            this.tbPlexTvPassword.PasswordChar = '*';
+            this.tbPlexTvPassword.Size = new System.Drawing.Size(306, 22);
+            this.tbPlexTvPassword.TabIndex = 3;
             // 
-            // lblStatus
+            // tbPlexTVName
             // 
-            this.lblStatus.AutoSize = true;
-            this.lblStatus.Location = new System.Drawing.Point(395, 17);
-            this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(52, 17);
-            this.lblStatus.TabIndex = 10;
-            this.lblStatus.Text = "Status:";
+            this.tbPlexTVName.Location = new System.Drawing.Point(21, 46);
+            this.tbPlexTVName.Name = "tbPlexTVName";
+            this.tbPlexTVName.Size = new System.Drawing.Size(306, 22);
+            this.tbPlexTVName.TabIndex = 2;
+            // 
+            // lblPlexTVPassword
+            // 
+            this.lblPlexTVPassword.AutoSize = true;
+            this.lblPlexTVPassword.Location = new System.Drawing.Point(18, 83);
+            this.lblPlexTVPassword.Name = "lblPlexTVPassword";
+            this.lblPlexTVPassword.Size = new System.Drawing.Size(116, 17);
+            this.lblPlexTVPassword.TabIndex = 1;
+            this.lblPlexTVPassword.Text = "plex.tv password:";
+            // 
+            // lblPlexTvLoginName
+            // 
+            this.lblPlexTvLoginName.AutoSize = true;
+            this.lblPlexTvLoginName.Location = new System.Drawing.Point(18, 17);
+            this.lblPlexTvLoginName.Name = "lblPlexTvLoginName";
+            this.lblPlexTvLoginName.Size = new System.Drawing.Size(125, 17);
+            this.lblPlexTvLoginName.TabIndex = 0;
+            this.lblPlexTvLoginName.Text = "plex.tv login name:";
+            // 
+            // LWStatus
+            // 
+            this.LWStatus.Location = new System.Drawing.Point(398, 46);
+            this.LWStatus.Name = "LWStatus";
+            this.LWStatus.Size = new System.Drawing.Size(547, 244);
+            this.LWStatus.TabIndex = 12;
+            this.LWStatus.UseCompatibleStateImageBehavior = false;
+            this.LWStatus.View = System.Windows.Forms.View.List;
             // 
             // Form1
             // 
@@ -253,9 +254,9 @@
         private System.Windows.Forms.TextBox tbPlexTvPassword2;
         private System.Windows.Forms.Label lblPlexTVPassword2;
         private System.Windows.Forms.Button btnClaimIt;
-        private System.Windows.Forms.TextBox tbIPPMS;
         private System.Windows.Forms.Label lblPMSIP;
-        private System.Windows.Forms.ListBox lbStatus;
         private System.Windows.Forms.Label lblStatus;
+        private System.Windows.Forms.MaskedTextBox mtbIPAddress;
+        private System.Windows.Forms.ListView LWStatus;
     }
 }
