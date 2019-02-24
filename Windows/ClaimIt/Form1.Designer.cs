@@ -34,6 +34,7 @@
             this.llDownload = new System.Windows.Forms.LinkLabel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.LWStatus = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.mtbIPAddress = new System.Windows.Forms.MaskedTextBox();
             this.lblStatus = new System.Windows.Forms.Label();
             this.btnClaimIt = new System.Windows.Forms.Button();
@@ -104,7 +105,7 @@
             this.llDownload.TabIndex = 4;
             this.llDownload.TabStop = true;
             this.llDownload.Text = "Download";
-            this.llDownload.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llDownload_LinkClicked);
+            this.llDownload.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LlDownload_LinkClicked);
             // 
             // panel1
             // 
@@ -128,13 +129,21 @@
             // 
             // LWStatus
             // 
+            this.LWStatus.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1});
+            this.LWStatus.LabelWrap = false;
             this.LWStatus.Location = new System.Drawing.Point(398, 46);
             this.LWStatus.Name = "LWStatus";
             this.LWStatus.Size = new System.Drawing.Size(547, 244);
             this.LWStatus.TabIndex = 12;
             this.LWStatus.TabStop = false;
             this.LWStatus.UseCompatibleStateImageBehavior = false;
-            this.LWStatus.View = System.Windows.Forms.View.List;
+            this.LWStatus.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "";
+            this.columnHeader1.Width = 900;
             // 
             // mtbIPAddress
             // 
@@ -143,7 +152,6 @@
             this.mtbIPAddress.Name = "mtbIPAddress";
             this.mtbIPAddress.Size = new System.Drawing.Size(113, 22);
             this.mtbIPAddress.TabIndex = 4;
-            this.mtbIPAddress.Text = "1921681  12";
             // 
             // lblStatus
             // 
@@ -261,5 +269,6 @@
         private System.Windows.Forms.Label lblStatus;
         private System.Windows.Forms.MaskedTextBox mtbIPAddress;
         private System.Windows.Forms.ListView LWStatus;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
     }
 }
