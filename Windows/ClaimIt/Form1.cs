@@ -7,6 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
+using System.Net;
+using System.Xml;
+
+
+
 namespace ClaimIt
 {
     public partial class Form1 : Form
@@ -44,12 +49,26 @@ namespace ClaimIt
             get; set;
         }
 
+        private string _machineIdentifier;
+        private string machineIdentifier
+        {
+            get
+            {
+                return _machineIdentifier;
+            }
+            set
+            {
+                _machineIdentifier = value;
+            }
+        }
+
         #endregion
 
         public Form1()
         {
             InitializeComponent();
         }
+
 
         private void LlSourceCode_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
@@ -135,7 +154,7 @@ namespace ClaimIt
             }
             else
             {
-                this.LWStatus.Items.Add(LWItem("Password checked...ERROR", Color.Red));                
+                this.LWStatus.Items.Add(LWItem("Password checked...ERROR...Passwords entered didn't match", Color.Red));                
                 return false;
             }
         }
@@ -157,12 +176,33 @@ namespace ClaimIt
 
         private Boolean GetPMSIdentifier()
         {
-
-
-
-
-            this.LWStatus.Items.Add(LWItem("WORK TO DO PMSIDENTIFIER.....Job Aborted", Color.Red));
-            return false;
+            try
+            {
+                this.LWStatus.Items.Add(LWItem("Fetching Identifier from PMS", Color.Gray));
+                string url = "http://" + mtbIPAddress.Text.Replace(" ", "") + ":32400/identity";
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                if ((int)response.StatusCode == 200)
+                {
+                    XmlDocument xmlDoc = new XmlDocument();
+                    xmlDoc.Load(response.GetResponseStream());
+                    machineIdentifier = xmlDoc.DocumentElement.GetAttribute("machineIdentifier");
+                    this.LWStatus.Items.Add(LWItem("Got PMS Identifier as: " + machineIdentifier, Color.Green));
+                    return true;
+                }
+                else
+                {
+                    this.LWStatus.Items.Add(LWItem("PROBLEM GETTING PMS IDENTIFIER.....Job Aborted", Color.Red));
+                    this.LWStatus.Items.Add(LWItem("http status was: " + response.StatusCode.ToString(), Color.Red));
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                this.LWStatus.Items.Add(LWItem("PROBLEM GETTING PMS IDENTIFIER.....Job Aborted", Color.Red));
+                this.LWStatus.Items.Add(LWItem("Error was: " + ex.Message, Color.Red));
+                return false;
+            }                        
         }
 
         private void BtnClaimIt_Click(object sender, EventArgs e)

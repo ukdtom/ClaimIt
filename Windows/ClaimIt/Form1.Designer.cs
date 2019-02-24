@@ -33,6 +33,7 @@
             this.llLicense = new System.Windows.Forms.LinkLabel();
             this.llDownload = new System.Windows.Forms.LinkLabel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.LWStatus = new System.Windows.Forms.ListView();
             this.mtbIPAddress = new System.Windows.Forms.MaskedTextBox();
             this.lblStatus = new System.Windows.Forms.Label();
             this.btnClaimIt = new System.Windows.Forms.Button();
@@ -43,7 +44,6 @@
             this.tbPlexTVName = new System.Windows.Forms.TextBox();
             this.lblPlexTVPassword = new System.Windows.Forms.Label();
             this.lblPlexTvLoginName = new System.Windows.Forms.Label();
-            this.LWStatus = new System.Windows.Forms.ListView();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -71,6 +71,7 @@
             this.lbAbout.Name = "lbAbout";
             this.lbAbout.Size = new System.Drawing.Size(982, 132);
             this.lbAbout.TabIndex = 1;
+            this.lbAbout.TabStop = false;
             // 
             // llSourceCode
             // 
@@ -125,13 +126,24 @@
             this.panel1.Size = new System.Drawing.Size(979, 351);
             this.panel1.TabIndex = 5;
             // 
+            // LWStatus
+            // 
+            this.LWStatus.Location = new System.Drawing.Point(398, 46);
+            this.LWStatus.Name = "LWStatus";
+            this.LWStatus.Size = new System.Drawing.Size(547, 244);
+            this.LWStatus.TabIndex = 12;
+            this.LWStatus.TabStop = false;
+            this.LWStatus.UseCompatibleStateImageBehavior = false;
+            this.LWStatus.View = System.Windows.Forms.View.List;
+            // 
             // mtbIPAddress
             // 
             this.mtbIPAddress.Location = new System.Drawing.Point(21, 268);
             this.mtbIPAddress.Mask = "###.###.###.###";
             this.mtbIPAddress.Name = "mtbIPAddress";
             this.mtbIPAddress.Size = new System.Drawing.Size(113, 22);
-            this.mtbIPAddress.TabIndex = 11;
+            this.mtbIPAddress.TabIndex = 4;
+            this.mtbIPAddress.Text = "1921681  12";
             // 
             // lblStatus
             // 
@@ -147,7 +159,7 @@
             this.btnClaimIt.Location = new System.Drawing.Point(21, 311);
             this.btnClaimIt.Name = "btnClaimIt";
             this.btnClaimIt.Size = new System.Drawing.Size(75, 23);
-            this.btnClaimIt.TabIndex = 8;
+            this.btnClaimIt.TabIndex = 5;
             this.btnClaimIt.Text = "&ClaimIt";
             this.btnClaimIt.UseVisualStyleBackColor = true;
             this.btnClaimIt.Click += new System.EventHandler(this.BtnClaimIt_Click);
@@ -167,7 +179,7 @@
             this.tbPlexTvPassword2.Name = "tbPlexTvPassword2";
             this.tbPlexTvPassword2.PasswordChar = '*';
             this.tbPlexTvPassword2.Size = new System.Drawing.Size(306, 22);
-            this.tbPlexTvPassword2.TabIndex = 5;
+            this.tbPlexTvPassword2.TabIndex = 3;
             // 
             // lblPlexTVPassword2
             // 
@@ -184,14 +196,14 @@
             this.tbPlexTvPassword.Name = "tbPlexTvPassword";
             this.tbPlexTvPassword.PasswordChar = '*';
             this.tbPlexTvPassword.Size = new System.Drawing.Size(306, 22);
-            this.tbPlexTvPassword.TabIndex = 3;
+            this.tbPlexTvPassword.TabIndex = 2;
             // 
             // tbPlexTVName
             // 
             this.tbPlexTVName.Location = new System.Drawing.Point(21, 46);
             this.tbPlexTVName.Name = "tbPlexTVName";
             this.tbPlexTVName.Size = new System.Drawing.Size(306, 22);
-            this.tbPlexTVName.TabIndex = 2;
+            this.tbPlexTVName.TabIndex = 1;
             // 
             // lblPlexTVPassword
             // 
@@ -210,15 +222,6 @@
             this.lblPlexTvLoginName.Size = new System.Drawing.Size(125, 17);
             this.lblPlexTvLoginName.TabIndex = 0;
             this.lblPlexTvLoginName.Text = "plex.tv login name:";
-            // 
-            // LWStatus
-            // 
-            this.LWStatus.Location = new System.Drawing.Point(398, 46);
-            this.LWStatus.Name = "LWStatus";
-            this.LWStatus.Size = new System.Drawing.Size(547, 244);
-            this.LWStatus.TabIndex = 12;
-            this.LWStatus.UseCompatibleStateImageBehavior = false;
-            this.LWStatus.View = System.Windows.Forms.View.List;
             // 
             // Form1
             // 
