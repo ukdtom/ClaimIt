@@ -235,7 +235,7 @@ namespace ClaimIt
         {
             try
             {
-                string url = string.Format("http://{0}:32400/myplex/claim?token={1}&X-Plex-Client-Identifier=ClaimIt-{2}&X-Plex-Token={3}", PMSIPAddr, PMSUsrToken, PMSID, PMSClaimItToken);
+                string url = string.Format("http://{0}:32400/myplex/claim?token={1}&X-Plex-Client-Identifier=ClaimIt-{2}&X-Plex-Token={3}", PMSIPAddr, PMSClaimItToken, PMSID, PMSUsrToken);
 
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
                 request.Method = "POST";
