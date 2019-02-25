@@ -7,7 +7,7 @@
 ![Maintenance](https://img.shields.io/badge/Maintained-Yes-green.svg)
 
 ***
-ClaimIt 4 Plex Media Server
+ClaimIt 4 [Plex Media Server](https://support.plex.tv/hc/en-us)
 
 This is intended for people installing a Plex Media Server, and when launched, can't get passed "Looking for Server..."
 
