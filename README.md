@@ -11,4 +11,6 @@ ClaimIt 4 [Plex Media Server](https://support.plex.tv/hc/en-us)
 
 This is intended for people installing a Plex Media Server, and when launched, can't get passed "Looking for Server..."
 
-For details, see the Wiki
+For details, see the Wiki:
+
+https://github.com/ukdtom/ClaimIt/wiki
