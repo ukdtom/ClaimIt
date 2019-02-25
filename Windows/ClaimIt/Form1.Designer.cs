@@ -67,7 +67,11 @@
                 "r a you, but we need it to authenticate towards plex.tv",
             " ",
             "If you wants to check out the sourcecode, then please review the sourcecode at th" +
-                "e link provided below"});
+                "e link provided below",
+            " ",
+            "Claimit was made by:",
+            "* dane22, a Plex community member\n",
+            "* Mark Walker/ZiGGiMoN, a Plex hobbyist"});
             this.lbAbout.Location = new System.Drawing.Point(12, 12);
             this.lbAbout.Name = "lbAbout";
             this.lbAbout.Size = new System.Drawing.Size(982, 132);

@@ -7,6 +7,7 @@
 #     * IP Address of your unclaimed Plex Media Server
 #
 # Made by dane22, a Plex community member
+# Mark Walker/ZiGGiMoN, a Plex hobbyist
 #************************************************************************
 
 #************************************************************************
@@ -154,6 +155,7 @@ echo "*     * IP Address of your unclaimed Plex Media Server"
 echo "*"
 echo "*"
 echo "* Made by dane22, a Plex community member"
+echo "* And Mark Walker/ZiGGiMoN, a Plex hobbyist"
 echo "************************************************************************"
 
 
