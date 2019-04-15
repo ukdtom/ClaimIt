@@ -269,32 +269,69 @@ namespace ClaimIt
             LWStatus.Items[LWStatus.Items.Count - 1].EnsureVisible();
         }
 
+       /// <summary>
+       /// Checks if an IP V4 Address is in private address space
+       /// </summary>
+       /// <param name="ipAddress"></param>
+       /// <returns>True if in private address space, else False</returns>
+        private bool _IsPrivate(string ipAddress)
+        {
+            int[] ipParts = ipAddress.Split(new String[] { "." }, StringSplitOptions.RemoveEmptyEntries)
+                                     .Select(s => int.Parse(s)).ToArray();
+            // in private ip range
+            if (ipParts[0] == 10 ||
+                (ipParts[0] == 192 && ipParts[1] == 168) ||
+                (ipParts[0] == 172 && (ipParts[1] >= 16 && ipParts[1] <= 31)))
+            {
+                return true;
+            }
+
+            // IP Address is probably public.
+            // This doesn't catch some VPN ranges like OpenVPN and Hamachi.
+            return false;
+        }
+
         private void BtnClaimIt_Click(object sender, EventArgs e)
         {
             Cursor.Current = Cursors.WaitCursor;
             PMSUsr = this.tbPlexTVName.Text;
             PMSPwd = this.tbPlexTvPassword.Text;
             PMSIPAddr = mtbIPAddress.Text.Replace(" ", "");
-            // Get IP of PC running this
-            IPAddress[] localIPs = Dns.GetHostAddresses(Dns.GetHostName());
-            foreach (var IP in localIPs)
+            // Check if address is either loopback or Private
+            if (!((PMSIPAddr == "127.0.0.1") || _IsPrivate(PMSIPAddr)))
             {
-                this.LWStatus.Items.Add(LWItem("This app is running on IP: " + IP.ToString(), Color.Gray));
+                UpdateStatus("The IP address entered is not in Private Address Space", Color.Red);
+                UpdateStatus("Either '127.0.0.1' or an address in private address space is needed to claim a server", Color.Red);
+                UpdateStatus("See: https://en.wikipedia.org/wiki/Private_network", Color.Red);
+                FatalError();
             }
-            UpdateStatus("PMS IP: " + PMSIPAddr, Color.Gray);
-            UpdateStatus("Starting to work...", Color.Gray);
-            if (ComparePwd())
-            {
-                if (GetPMSIdentifier())
+            else
+            {                               
+                // Get IP of PC running this
+                IPAddress[] localIPs = Dns.GetHostAddresses(Dns.GetHostName());
+                foreach (var IP in localIPs)
                 {
-                    if (GetUserToken())
+                    this.LWStatus.Items.Add(LWItem("This app is running on IP: " + IP.ToString(), Color.Gray));
+                }
+                UpdateStatus("PMS IP: " + PMSIPAddr, Color.Gray);
+                UpdateStatus("Starting to work...", Color.Gray);
+                if (ComparePwd())
+                {
+                    if (GetPMSIdentifier())
                     {
-                        if (GetClaimToken())
+                        if (GetUserToken())
                         {
-                            if (ClaimIt())
+                            if (GetClaimToken())
                             {
-                                UpdateStatus("All Done", Color.Green);
-                                UpdateStatus(string.Format("Please close your browser, reopen, and browse to http://{0}:32400/web", PMSIPAddr), Color.Green);                                
+                                if (ClaimIt())
+                                {
+                                    UpdateStatus("All Done", Color.Green);
+                                    UpdateStatus(string.Format("Please close your browser, reopen, and browse to http://{0}:32400/web", PMSIPAddr), Color.Green);
+                                }
+                                else
+                                {
+                                    FatalError();
+                                }
                             }
                             else
                             {
@@ -315,12 +352,8 @@ namespace ClaimIt
                 {
                     FatalError();
                 }
+                Cursor.Current = Cursors.Default;
             }
-            else
-            {
-                FatalError();
-            }                       
-            Cursor.Current = Cursors.Default;            
         }
     }
 }
