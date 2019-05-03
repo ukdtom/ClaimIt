@@ -10,6 +10,15 @@
 # Mark Walker/ZiGGiMoN, a Plex hobbyist
 #************************************************************************
 
+#*****************************************
+#* Test if /bin/sh is dash
+#* Functions's don't work with dash.
+#*****************************************
+#if [ "$(readlink -- "/bin/sh")" = dash ]; then
+#  echo "/bin/sh links to dash, upgrade to bash or run: bash claimit.sh"
+#  exit 1
+#fi
+
 #************************************************************************
 # Functions
 #************************************************************************
@@ -24,6 +33,26 @@ function ComparePwd()
      echo "Password mismatch"
      exit 1 # terminate and indicate error
   fi
+}
+
+function ValidateIP()
+# Check if IP has valid format
+{
+  if [ "`echo $ippms | awk -F'.' 'NF==4 && $1 > 0 && $1<256 && $2<256 && $3<256 && $4<256 && !/\.\./'`" == "$ippms" ]
+    then
+      if  echo "$ippms" | grep -Eq '(^127\.0\.0\.1)|(^10\.)|(^172\.1[6-9]\.)|(^172\.2[0-9]\.)|(^172\.3[0-1]\.)|(^192\.168\.)' >/dev/null; then
+         return 0
+      else
+         echo "The IP address entered is not in Private Address Space"
+         echo "Either '127.0.0.1' or an address in private address space is needed to claim a server"
+         echo "See: https://en.wikipedia.org/wiki/Private_network"
+         exit 1
+      fi
+      return 0
+    else
+      echo "IP is not valid"
+      exit 1 # terminate and indicate error
+   fi
 }
 
 function GetClaimToken()
@@ -85,7 +114,7 @@ function GetLoginToken()
 function GetClientIdentifier()
 # Get PMS machineIdentifier
 {
-  url="$ippms:32400/identity"
+  url="https://$ippms:32400/identity"
   content=$(curl -i -k -L -s $url)
   local machineIdentifier=$(printf %s "$content" | awk -F= '$1=="machineIdentifier"{print $2}' RS=' '| cut -d '"' -f 2)
   local http_status=$(echo "$content" | grep HTTP |  awk '{print $2}')
@@ -141,6 +170,35 @@ function Claimit()
   fi  
 }
 
+function CheckForOnLineMail()
+#*****************************************
+#* Get user auth token from plex.tv
+#* Needs the following params:
+#* 1 Param: UserName
+#* 2 Param: Password
+#* 3 Param: X-Plex-Client-Identifier
+#*****************************************
+{
+  url="https://$ippms:32400/:/prefs?X-Plex-Token=$UserToken"
+  local response=$(curl -i -k -L -s $url)
+  # Grap the MailAddr 
+  local usermail=$(printf %s "$response" | awk -F= '/PlexOnlineMail/{print $7}'|cut -d '"' -f 2)
+  # grap the return code
+  local http_status=$(echo "$response" | grep "HTTP/" |  awk '{print $2}')
+  if [ -z "$http_status" ];
+  then
+     exit 1
+  else
+    if [ $http_status -eq "200" ]
+    then
+      echo "$usermail"
+      exit 0
+    else
+      exit 1
+    fi
+  fi
+}
+
 #************************************************************************
 #* Main
 #************************************************************************
@@ -172,6 +230,16 @@ read -p 'IP Address of PMS server: ' ippms
 echo "Comparing entered passwords"
 ComparePwd
 echo "Comparing entered passwords ok"
+
+echo "Validating IP address"
+if ! CheckIPValidity=$(ValidateIP);
+then
+  echo "******** ERROR ********"
+  echo "The IP address entered is not in Private Address Space"
+  echo "Either '127.0.0.1' or an address in private address space is needed to claim a server"
+  echo "See: https://en.wikipedia.org/wiki/Private_network"
+  exit 1
+fi
 
 echo "Getting PMS Server Identifier"
 if ! XPlexClientIdentifier=$(GetClientIdentifier);
@@ -205,6 +273,22 @@ then
 fi
 echo "Getting PMS Claim Token ok"
 
+# Check if server is claimed already
+echo "Checking if server is already claimed"
+if ! CheckClaimedEmail=$(CheckForOnLineMail);
+then
+  echo "******** ERROR ********"
+  echo "We failed to grab claim email from Plex Media Server"
+  echo "Who are you gonna call?"
+  exit 1
+fi
+
+if echo "$CheckClaimedEmail" | grep '^[a-zA-Z0-9._]*@[a-zA-Z0-9.]*\.[a-zA-Z0-9]*' >/dev/null; then
+    echo "The server is already claimed with email: $CheckClaimedEmail"
+    echo "Exiting"
+    exit 1
+fi
+
 # Claiming server
 echo "Claiming server"
-Claimit "$ippms" "$XPlexClaimtoken" "$XPlexClientIdentifier" "$UserToken"
+echo Claimit "$ippms" "$XPlexClaimtoken" "$XPlexClientIdentifier" "$UserToken"
