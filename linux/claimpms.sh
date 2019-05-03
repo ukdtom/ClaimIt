@@ -114,7 +114,7 @@ function GetLoginToken()
 function GetClientIdentifier()
 # Get PMS machineIdentifier
 {
-  url="https://$ippms:32400/identity"
+  url="http://$ippms:32400/identity"
   content=$(curl -i -k -L -s $url)
   local machineIdentifier=$(printf %s "$content" | awk -F= '$1=="machineIdentifier"{print $2}' RS=' '| cut -d '"' -f 2)
   local http_status=$(echo "$content" | grep HTTP |  awk '{print $2}')
