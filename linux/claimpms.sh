@@ -9,6 +9,8 @@
 # Made by dane22, a Plex community member
 # Mark Walker/ZiGGiMoN, a Plex hobbyist
 #
+# Version: 1.1.0.0
+#
 # Home: https://github.com/ukdtom/ClaimIt
 #************************************************************************
 
@@ -178,6 +180,8 @@ echo "*"
 echo "*"
 echo "* Made by dane22, a Plex community member"
 echo "* And Mark Walker/ZiGGiMoN, a Plex hobbyist"
+echo "*"
+echo "* Version 1.1.0.0"
 echo "*"
 echo "* To see the manual, please visit https://github.com/ukdtom/ClaimIt/wiki"
 echo "************************************************************************"
