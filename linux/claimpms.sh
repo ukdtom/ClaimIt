@@ -170,35 +170,6 @@ function Claimit()
   fi  
 }
 
-function CheckForOnLineMail()
-#*****************************************
-#* Get user auth token from plex.tv
-#* Needs the following params:
-#* 1 Param: UserName
-#* 2 Param: Password
-#* 3 Param: X-Plex-Client-Identifier
-#*****************************************
-{
-  url="https://$ippms:32400/:/prefs?X-Plex-Token=$UserToken"
-  local response=$(curl -i -k -L -s $url)
-  # Grap the MailAddr 
-  local usermail=$(printf %s "$response" | awk -F= '/PlexOnlineMail/{print $7}'|cut -d '"' -f 2)
-  # grap the return code
-  local http_status=$(echo "$response" | grep "HTTP/" |  awk '{print $2}')
-  if [ -z "$http_status" ];
-  then
-     exit 1
-  else
-    if [ $http_status -eq "200" ]
-    then
-      echo "$usermail"
-      exit 0
-    else
-      exit 1
-    fi
-  fi
-}
-
 #************************************************************************
 #* Main
 #************************************************************************
@@ -214,9 +185,9 @@ echo "*"
 echo "*"
 echo "* Made by dane22, a Plex community member"
 echo "* And Mark Walker/ZiGGiMoN, a Plex hobbyist"
+echo "*"
+echo "* To see the manual, please visit https://github.com/ukdtom/ClaimIt/wiki"
 echo "************************************************************************"
-
-
 
 read -p 'plex.tv Username: ' uservar
 echo ''
@@ -272,22 +243,6 @@ then
   exit 1
 fi
 echo "Getting PMS Claim Token ok"
-
-# Check if server is claimed already
-echo "Checking if server is already claimed"
-if ! CheckClaimedEmail=$(CheckForOnLineMail);
-then
-  echo "******** ERROR ********"
-  echo "We failed to grab claim email from Plex Media Server"
-  echo "Who are you gonna call?"
-  exit 1
-fi
-
-if echo "$CheckClaimedEmail" | grep '^[a-zA-Z0-9._]*@[a-zA-Z0-9.]*\.[a-zA-Z0-9]*' >/dev/null; then
-    echo "The server is already claimed with email: $CheckClaimedEmail"
-    echo "Exiting"
-    exit 1
-fi
 
 # Claiming server
 echo "Claiming server"
