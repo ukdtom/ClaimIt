@@ -38,7 +38,7 @@ function ValidateIP()
       else
          echo "The IP address entered is not in Private Address Space"
          echo "Either '127.0.0.1' or an address in private address space is needed to claim a server"
-         echo "See: https://en.wikipedia.org/wiki/Private_network"
+         echo "See: https://github.com/ukdtom/ClaimIt/wiki/IP-Address-requirement"
          exit 1
       fi
       return 0
