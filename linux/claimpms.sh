@@ -12,15 +12,6 @@
 # Home: https://github.com/ukdtom/ClaimIt
 #************************************************************************
 
-#*****************************************
-#* Test if /bin/sh is dash
-#* Functions's don't work with dash.
-#*****************************************
-#if [ "$(readlink -- "/bin/sh")" = dash ]; then
-#  echo "/bin/sh links to dash, upgrade to bash or run: bash claimit.sh"
-#  exit 1
-#fi
-
 #************************************************************************
 # Functions
 #************************************************************************
