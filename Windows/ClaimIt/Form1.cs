@@ -255,8 +255,7 @@ namespace ClaimIt
             {
                 UpdateStatus("PROBLEM: Can't Claim PMS.....Job Aborted", Color.Red);                
                 UpdateStatus("Error was: " + ex.Message, Color.Red);
-                UpdateStatus("If status code is 401, then most likely the PMS was already claimed, and belongs to somebody else!", Color.Red);
-                UpdateStatus("If this really is your server, then see: https://support.plex.tv/articles/204281528-why-am-i-locked-out-of-server-settings-and-how-do-i-get-in/", Color.Red);
+                UpdateStatus("Please see: https://github.com/ukdtom/ClaimIt/wiki/Error-Codes", Color.Red);                
                 return false;
             }
         }
@@ -301,8 +300,7 @@ namespace ClaimIt
             if (!((PMSIPAddr == "127.0.0.1") || _IsPrivate(PMSIPAddr)))
             {
                 UpdateStatus("The IP address entered is not in Private Address Space", Color.Red);
-                UpdateStatus("Either '127.0.0.1' or an address in private address space is needed to claim a server", Color.Red);
-                UpdateStatus("See: https://en.wikipedia.org/wiki/Private_network", Color.Red);
+                UpdateStatus("Please see: https://github.com/ukdtom/ClaimIt/wiki/IP-Address-requirement", Color.Red);                
                 FatalError();
             }
             else
