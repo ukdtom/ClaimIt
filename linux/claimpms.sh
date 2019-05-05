@@ -8,6 +8,8 @@
 #
 # Made by dane22, a Plex community member
 # Mark Walker/ZiGGiMoN, a Plex hobbyist
+#
+# Home: https://github.com/ukdtom/ClaimIt
 #************************************************************************
 
 #*****************************************
@@ -208,7 +210,7 @@ then
   echo "******** ERROR ********"
   echo "The IP address entered is not in Private Address Space"
   echo "Either '127.0.0.1' or an address in private address space is needed to claim a server"
-  echo "See: https://en.wikipedia.org/wiki/Private_network"
+  echo "See: https://github.com/ukdtom/ClaimIt/wiki/IP-Address-requirement"
   exit 1
 fi
 
@@ -246,4 +248,4 @@ echo "Getting PMS Claim Token ok"
 
 # Claiming server
 echo "Claiming server"
-echo Claimit "$ippms" "$XPlexClaimtoken" "$XPlexClientIdentifier" "$UserToken"
+Claimit "$ippms" "$XPlexClaimtoken" "$XPlexClientIdentifier" "$UserToken"
