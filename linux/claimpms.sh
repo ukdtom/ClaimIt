@@ -8,6 +8,10 @@
 #
 # Made by dane22, a Plex community member
 # Mark Walker/ZiGGiMoN, a Plex hobbyist
+#
+# Version: 1.1.0.0
+#
+# Home: https://github.com/ukdtom/ClaimIt
 #************************************************************************
 
 #************************************************************************
@@ -24,6 +28,26 @@ function ComparePwd()
      echo "Password mismatch"
      exit 1 # terminate and indicate error
   fi
+}
+
+function ValidateIP()
+# Check if IP has valid format
+{
+  if [ "`echo $ippms | awk -F'.' 'NF==4 && $1 > 0 && $1<256 && $2<256 && $3<256 && $4<256 && !/\.\./'`" == "$ippms" ]
+    then
+      if  echo "$ippms" | grep -Eq '(^127\.0\.0\.1)|(^10\.)|(^172\.1[6-9]\.)|(^172\.2[0-9]\.)|(^172\.3[0-1]\.)|(^192\.168\.)' >/dev/null; then
+         return 0
+      else
+         echo "The IP address entered is not in Private Address Space"
+         echo "Either '127.0.0.1' or an address in private address space is needed to claim a server"
+         echo "See: https://github.com/ukdtom/ClaimIt/wiki/IP-Address-requirement"
+         exit 1
+      fi
+      return 0
+    else
+      echo "IP is not valid"
+      exit 1 # terminate and indicate error
+   fi
 }
 
 function GetClaimToken()
@@ -85,7 +109,7 @@ function GetLoginToken()
 function GetClientIdentifier()
 # Get PMS machineIdentifier
 {
-  url="$ippms:32400/identity"
+  url="http://$ippms:32400/identity"
   content=$(curl -i -k -L -s $url)
   local machineIdentifier=$(printf %s "$content" | awk -F= '$1=="machineIdentifier"{print $2}' RS=' '| cut -d '"' -f 2)
   local http_status=$(echo "$content" | grep HTTP |  awk '{print $2}')
@@ -156,9 +180,11 @@ echo "*"
 echo "*"
 echo "* Made by dane22, a Plex community member"
 echo "* And Mark Walker/ZiGGiMoN, a Plex hobbyist"
+echo "*"
+echo "* Version 1.1.0.0"
+echo "*"
+echo "* To see the manual, please visit https://github.com/ukdtom/ClaimIt/wiki"
 echo "************************************************************************"
-
-
 
 read -p 'plex.tv Username: ' uservar
 echo ''
@@ -172,6 +198,16 @@ read -p 'IP Address of PMS server: ' ippms
 echo "Comparing entered passwords"
 ComparePwd
 echo "Comparing entered passwords ok"
+
+echo "Validating IP address"
+if ! CheckIPValidity=$(ValidateIP);
+then
+  echo "******** ERROR ********"
+  echo "The IP address entered is not in Private Address Space"
+  echo "Either '127.0.0.1' or an address in private address space is needed to claim a server"
+  echo "See: https://github.com/ukdtom/ClaimIt/wiki/IP-Address-requirement"
+  exit 1
+fi
 
 echo "Getting PMS Server Identifier"
 if ! XPlexClientIdentifier=$(GetClientIdentifier);
