@@ -87,8 +87,8 @@ function GetLoginToken()
 #* 3 Param: X-Plex-Client-Identifier
 #*****************************************
 {
-  url="https://plex.tv/api/v2/users/signin?login=$1&password=$2&X-Plex-Client-Identifier=ClaimIt-$3"
-  local response=$(curl -X POST -i -k -L -s $url)
+  url="https://plex.tv/api/v2/users/signin"
+  local response=$(curl -X POST -i -k -L -s $url --data-urlencode "login=$1" --data-urlencode "password=$2" --data-urlencode "X-Plex-Client-Identifier=ClaimIt-$3")
   # Grap the token
   local UserToken=$(printf %s "$response" | awk -F= '$1=="authToken"{print $2}' RS=' '| cut -d '"' -f 2)
   # grap the return code
