@@ -9,6 +9,8 @@ using System.Windows.Forms;
 
 using System.Net;
 using System.Xml;
+using System.Web;
+
 
 
 
@@ -173,8 +175,8 @@ namespace ClaimIt
         private Boolean GetUserToken()
         {
             try
-            { 
-                string url = string.Format("https://plex.tv/api/v2/users/signin?login={0}&password={1}&X-Plex-Client-Identifier=ClaimIt-{2}", PMSUsr, PMSPwd, PMSID);
+            {               
+                string url = string.Format("https://plex.tv/api/v2/users/signin?login={0}&password={1}&X-Plex-Client-Identifier=ClaimIt-{2}", HttpUtility.UrlEncode(PMSUsr), HttpUtility.UrlEncode(PMSPwd), PMSID);               
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
                 request.Method = "POST";
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
@@ -295,7 +297,10 @@ namespace ClaimIt
             Cursor.Current = Cursors.WaitCursor;
             PMSUsr = this.tbPlexTVName.Text;
             PMSPwd = this.tbPlexTvPassword.Text;
+            // Strip whitespace
             PMSIPAddr = mtbIPAddress.Text.Replace(" ", "");
+            //Convert comma to dot
+            PMSIPAddr = PMSIPAddr.Replace(",", ".");
             // Check if address is either loopback or Private
             if (!((PMSIPAddr == "127.0.0.1") || _IsPrivate(PMSIPAddr)))
             {

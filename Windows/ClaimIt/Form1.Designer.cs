@@ -135,6 +135,7 @@
             // 
             this.LWStatus.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1});
+            this.LWStatus.HideSelection = false;
             this.LWStatus.LabelWrap = false;
             this.LWStatus.Location = new System.Drawing.Point(398, 46);
             this.LWStatus.Name = "LWStatus";
