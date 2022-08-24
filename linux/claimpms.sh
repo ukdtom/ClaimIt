@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 #************************************************************************
 # Script to claim a Plex Media Server
 # Will prompt for:
