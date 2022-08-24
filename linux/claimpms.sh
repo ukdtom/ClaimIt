@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #************************************************************************
 # Script to claim a Plex Media Server
 # Will prompt for:
@@ -84,11 +84,16 @@ function GetLoginToken()
 #* Needs the following params:
 #* 1 Param: UserName
 #* 2 Param: Password
-#* 3 Param: X-Plex-Client-Identifier
+#* 3 Param: Verification Code (2FA)
+#* 4 Param: X-Plex-Client-Identifier
 #*****************************************
 {
-  url="https://plex.tv/api/v2/users/signin"
-  local response=$(curl -X POST -i -k -L -s $url --data-urlencode "login=$1" --data-urlencode "password=$2" --data-urlencode "X-Plex-Client-Identifier=ClaimIt-$3")
+  if [ "$3" != "none" ]; then
+    url="https://plex.tv/api/v2/users/signin?login=$1&password=$2&verificationCode=$3&X-Plex-Client-Identifier=ClaimIt-$4"
+  else
+    url="https://plex.tv/api/v2/users/signin?login=$1&password=$2&X-Plex-Client-Identifier=ClaimIt-$4"
+  fi
+  local response=$(curl -X POST -i -k -L -s $url)
   # Grap the token
   local UserToken=$(printf %s "$response" | awk -F= '$1=="authToken"{print $2}' RS=' '| cut -d '"' -f 2)
   # grap the return code
@@ -192,13 +197,18 @@ read -sp 'plex.tv Password: ' passvar
 echo ''
 read -sp 'plex.tv Password Repeated: ' passvar2
 echo ''
-read -p 'IP Address of PMS server: ' ippms
+read -p 'plex.tv VerificationCode(leave empty if not used): ' verificationCode
+echo ''
+read -p 'IP Address of PMS server (leave empty for default 127.0.0.1): ' ippms
 
 # Compare pwd entered
 echo "Comparing entered passwords"
 ComparePwd
 echo "Comparing entered passwords ok"
 
+if [ -z "$ippms" ]; then
+  ippms='127.0.0.1'
+fi  
 echo "Validating IP address"
 if ! CheckIPValidity=$(ValidateIP);
 then
@@ -221,7 +231,10 @@ echo "Getting PMS Server Identifier ok"
 
 # Get UserToken from plex.tv
 echo "Getting User Token from plex.tv"
-if ! UserToken=$(GetLoginToken "$uservar" "$passvar" "$XPlexClientIdentifier");
+if [ -z "$verificationCode" ]; then
+  verificationCode='none'
+fi
+if ! UserToken=$(GetLoginToken "$uservar" "$passvar" "$verificationCode" "$XPlexClientIdentifier");
 then
   echo "******** ERROR ********"
   echo "We failed to authenticate towards plex.tv"
