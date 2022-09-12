@@ -17,4 +17,4 @@ https://github.com/ukdtom/ClaimIt/wiki
 
 
 # NOTE:
-For Windows users, we recommend you instead use this one: https://github.com/ukdtom/ClaimPMS4Win/releases/latest
+For Windows users, we recommend you use this instead: https://github.com/ukdtom/ClaimPMS4Win/releases/latest
