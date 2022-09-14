@@ -14,5 +14,4 @@ This is intended for people installing a Plex Media Server, and when launched, c
 For details, see the Wiki: https://github.com/ukdtom/ClaimIt/wiki
 
 
-# NOTE:
-For Windows users, we recommend you use this instead: https://github.com/ukdtom/ClaimPMS4Win/wiki
+**NOTE:** _For Windows users, we recommend you use this instead: https://github.com/ukdtom/ClaimPMS4Win/wiki_
